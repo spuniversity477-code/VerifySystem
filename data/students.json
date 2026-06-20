@@ -1,17 +1,16 @@
 [
     {
-        "faculty": "Faculty of Computer Science",
-        "enrollment": "SPU2026001",
-        "dob": "2001-05-15",
-        "studentName": "Rahul Sharma",
-        "fatherName": "Rajesh Sharma",
-        "motherName": "Sunita Sharma",
-        "course": "BCA",
-        "certificateNo": "CERT-2026-001",
-        "issueDate": "15 January 2026",
-        "division": "First Division",
-        "photo": "../assets/placeholder_photo.jpg",
-        "signature": "../assets/placeholder_sign.png"
+        "faculty": "Faculty of Management",
+        "enrollment": "81544918401",
+        "dob": "2003-04-28",
+        "studentName": "Supriya Pandey",
+        "fatherName": "Jay Shankar Pandey",
+        "motherName": "Gita Pandey",
+        "course": "Bachelor of Business Administration (Honours)",
+        "issueDate": "08 May, 2026",
+        "division": " 68.81% / First Division",
+        "photo": "../assets/Supriya.jpg",
+        "signature": "../assets/Sign.png"
     },
     {
         "faculty": "Faculty of Commerce",
