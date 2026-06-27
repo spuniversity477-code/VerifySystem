@@ -1,1 +1,30 @@
-
+{
+  "VU22BPH084": {
+    "scholarNo": "VU22BPH084",
+    "name": "Sunil Baniya",
+    "father": "N/A",
+    "programme": "BPH (Bachelor of Pharmacy)",
+    "branch": "Faculty of Medical & Allied Sciences",
+    "year": "8th Semester (Final Year)",
+    "status": "Accepted",
+    "documentUrl": "Dacument/Sunil.pdf"
+  },
+  "VU2025CS1042": {
+    "scholarNo": "VU2025CS1042",
+    "name": "Rahul Kumar Singh",
+    "father": "Mr. Rajesh Kumar Singh",
+    "programme": "B.Tech",
+    "branch": "Computer Science",
+    "year": "1st Year",
+    "status": "Accepted"
+  },
+  "VU2025MBA2001": {
+    "scholarNo": "VU2025MBA2001",
+    "name": "Priya Sharma",
+    "father": "Mr. Anil Sharma",
+    "programme": "MBA",
+    "branch": "Business Administration",
+    "year": "1st Year",
+    "status": "Accepted"
+  }
+}
