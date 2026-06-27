@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<meta name="googlebot" content="noindex, nofollow, noarchive" />
+<title>VIKRANT ERP | Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:        #1a3a6b;
+  --navy-dark:   #0f2547;
+  --navy-mid:    #1e4d8c;
+  --navy-light:  #2563a8;
+  --blue-btn:    #1e5799;
+  --blue-hover:  #174a85;
+  --bg-left:     #eef1f8;
+  --white:       #ffffff;
+  --gray-border: #d8dde8;
+  --gray-input:  #f5f6fa;
+  --gray-text:   #6b7280;
+  --dark-text:   #1a1a2e;
+  --success:     #16a34a;
+  --error:       #dc2626;
+  --warn:        #d97706;
+}
+
+html, body { height: 100%; min-height: 100vh; font-family: 'Inter', sans-serif; background: var(--bg-left); }
+
+/* ─── SCREENS ─── */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; }
+
+/* ─── SPLIT LAYOUT ─── */
+.split { display: flex; width: 100%; min-height: 100vh; }
+
+.left-panel {
+  width: 52%;
+  background: var(--bg-left);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 52px;
+  position: relative;
+  overflow-y: auto;
+}
+.left-panel::after {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gray-border) 20%, var(--gray-border) 80%, transparent);
+}
+
+.right-panel { width: 48%; position: relative; overflow: hidden; }
+.right-panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.right-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(15,37,71,0.55) 0%, rgba(15,37,71,0.1) 60%);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 40px 36px;
+}
+.campus-caption { color: white; }
+.campus-caption h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+.campus-caption p  { font-size: 13px; opacity: 0.85; line-height: 1.5; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+.campus-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.campus-tag {
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white; font-size: 11.5px; font-weight: 600;
+  padding: 4px 12px; border-radius: 20px;
+}
+
+.form-wrap { width: 100%; max-width: 460px; }
+
+/* ─── LOGO ─── */
+.logo-area { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; justify-content: center; }
+.logo-shield {
+  width: 52px; height: 60px;
+  background: var(--navy);
+  border-radius: 4px 4px 26px 26px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 20px; font-weight: 900;
+  box-shadow: 0 4px 16px rgba(26,58,107,0.3); flex-shrink: 0;
+}
+.logo-text-block .vname  { font-size: 24px; font-weight: 700; color: var(--navy); line-height: 1; }
+.logo-text-block .vuni   { font-size: 15px; font-weight: 400; color: var(--navy-mid); }
+.logo-text-block .vgwalior {
+  font-size: 9.5px; letter-spacing: 3px; color: var(--gray-text);
+  text-transform: uppercase; margin-top: 3px;
+  border-top: 1px solid var(--gray-border); padding-top: 3px;
+}
+
+.page-heading { font-size: 26px; font-weight: 700; color: var(--dark-text); margin-bottom: 4px; }
+.page-sub { font-size: 13px; color: var(--gray-text); margin-bottom: 22px; }
+
+/* ─── FIELDS ─── */
+.field-label { display: block; font-size: 12.5px; font-weight: 500; color: var(--dark-text); margin-bottom: 5px; }
+.field-input {
+  width: 100%; background: var(--white);
+  border: 1.5px solid var(--gray-border); border-radius: 7px;
+  padding: 10px 13px; font-size: 13.5px; font-family: 'Inter', sans-serif;
+  color: var(--dark-text); outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s; appearance: none;
+}
+.field-input::placeholder { color: #b0b8cc; }
+.field-input:focus { border-color: var(--navy-mid); box-shadow: 0 0 0 3px rgba(30,77,140,0.1); }
+.field-input.error { border-color: var(--error); }
+.field-input.success { border-color: var(--success); }
+.field-wrap { margin-bottom: 14px; position: relative; }
+.field-error { font-size: 11.5px; color: var(--error); margin-top: 4px; display: none; }
+.field-error.show { display: block; }
+
+.select-wrap { position: relative; }
+.select-wrap::after {
+  content: '▾'; position: absolute; right: 13px; top: 50%;
+  transform: translateY(-50%); color: var(--gray-text);
+  pointer-events: none; font-size: 12px;
+}
+.select-wrap select { padding-right: 34px; cursor: pointer; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* ─── OTP BOX ─── */
+.otp-row { display: flex; gap: 10px; align-items: center; }
+.otp-row .field-input { flex: 1; letter-spacing: 8px; font-size: 18px; font-weight: 700; text-align: center; }
+.btn-otp-send {
+  flex-shrink: 0; background: var(--navy); color: white;
+  border: none; border-radius: 7px; padding: 10px 14px;
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  white-space: nowrap; font-family: 'Inter', sans-serif;
+  transition: background 0.18s;
+}
+.btn-otp-send:hover { background: var(--navy-dark); }
+.btn-otp-send:disabled { background: #94a3b8; cursor: not-allowed; }
+
+.otp-hint {
+  background: #f0fdf4; border: 1px solid #bbf7d0;
+  border-radius: 7px; padding: 10px 13px;
+  font-size: 12px; color: #15803d;
+  display: none; align-items: flex-start; gap: 7px;
+  margin-top: 8px; line-height: 1.5;
+}
+.otp-hint.show { display: flex; }
+
+/* ─── INFO NOTE ─── */
+.info-note {
+  background: #eff6ff; border: 1px solid #bfdbfe;
+  border-radius: 7px; padding: 10px 13px;
+  font-size: 12px; color: #1e40af;
+  display: flex; align-items: flex-start; gap: 7px;
+  margin-bottom: 16px; line-height: 1.5;
+}
+.info-note .icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+/* ─── STEPS ─── */
+.steps-bar {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 22px; width: 100%;
+}
+.step-item { display: flex; align-items: center; gap: 6px; flex: 1; }
+.step-dot {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--gray-border); color: var(--gray-text);
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s;
+}
+.step-dot.done { background: var(--success); color: white; }
+.step-dot.active { background: var(--navy); color: white; }
+.step-label { font-size: 11px; color: var(--gray-text); font-weight: 500; }
+.step-label.active { color: var(--navy); font-weight: 600; }
+.step-line { flex: 1; height: 1.5px; background: var(--gray-border); }
+
+/* ─── BUTTONS ─── */
+.btn-row { display: flex; gap: 10px; margin-top: 6px; }
+.btn-primary {
+  flex: 1; background: var(--blue-btn); color: var(--white);
+  border: none; border-radius: 7px; padding: 11px 18px;
+  font-size: 13.5px; font-weight: 600; font-family: 'Inter', sans-serif;
+  cursor: pointer; transition: background 0.18s, box-shadow 0.18s; letter-spacing: 0.2px;
+}
+.btn-primary:hover { background: var(--blue-hover); box-shadow: 0 4px 14px rgba(30,87,153,0.3); }
+.btn-primary:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
+.btn-secondary {
+  background: var(--white); color: var(--navy);
+  border: 1.5px solid var(--navy); border-radius: 7px;
+  padding: 10px 18px; font-size: 13.5px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.18s;
+}
+.btn-secondary:hover { background: var(--navy); color: var(--white); }
+
+.link-btn {
+  background: none; border: none; color: var(--navy-mid);
+  font-size: 12.5px; font-weight: 500; cursor: pointer;
+  font-family: 'Inter', sans-serif; text-decoration: underline;
+  padding: 0;
+}
+.link-btn:hover { color: var(--navy); }
+
+/* ─── DIVIDER ─── */
+.divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 16px 0; color: var(--gray-text); font-size: 11.5px;
+}
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gray-border); }
+
+/* ─── TABS ─── */
+.tab-row {
+  display: flex; border-bottom: 2px solid var(--gray-border);
+  margin-bottom: 22px; gap: 0;
+}
+.tab {
+  padding: 8px 14px; font-size: 13px; font-weight: 500;
+  color: var(--gray-text); cursor: pointer;
+  border-bottom: 2.5px solid transparent; margin-bottom: -2px;
+  transition: all 0.18s; white-space: nowrap;
+}
+.tab.active { color: var(--navy); border-bottom-color: var(--navy); font-weight: 600; }
+.tab:hover:not(.active) { color: var(--navy-mid); }
+
+/* ─── RESULT CARD ─── */
+.result-card {
+  background: var(--white); border: 1.5px solid var(--gray-border);
+  border-radius: 10px; overflow: hidden; margin-top: 16px; display: none;
+}
+.result-card.show { display: block; animation: fadeUp 0.3s ease; }
+@keyframes fadeUp { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+
+.result-head {
+  background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 13px 16px; display: flex; align-items: center; gap: 10px;
+}
+.result-head.invalid { background: linear-gradient(90deg, #991b1b, #dc2626); }
+.result-head h4 { color: white; font-size: 14px; font-weight: 600; flex: 1; }
+.badge-valid   { background: #22c55e; color: white; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px; }
+.badge-invalid { background: #ef4444; color: white; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.badge-pending { background: #f59e0b; color: white; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+
+.result-body { padding: 14px 16px; }
+.result-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid var(--gray-border); font-size: 12.5px;
+}
+.result-row:last-child { border-bottom: none; }
+.r-label { color: var(--gray-text); font-weight: 500; flex-shrink: 0; margin-right: 10px; }
+.r-value { color: var(--dark-text); font-weight: 600; text-align: right; }
+.r-value.green { color: var(--success); }
+.r-value.red   { color: var(--error); }
+.r-value.warn  { color: var(--warn); }
+.r-section {
+  background: var(--bg-left); margin: 8px -16px;
+  padding: 5px 16px; font-size: 11px; font-weight: 700;
+  color: var(--navy); text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* ─── QUICK CHIPS ─── */
+.quick-ids { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.quick-chip {
+  background: var(--white); border: 1.5px solid var(--gray-border);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 11.5px; color: var(--navy-mid); cursor: pointer;
+  transition: all 0.15s; font-weight: 500;
+}
+.quick-chip:hover { background: var(--navy); color: white; border-color: var(--navy); }
+
+/* ─── FILE BOX ─── */
+.file-box {
+  width: 100%; border: 1.8px dashed var(--gray-border);
+  border-radius: 7px; padding: 20px 14px;
+  text-align: center; background: var(--white);
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  font-size: 13px; color: var(--gray-text); display: block;
+}
+.file-box:hover { border-color: var(--navy-mid); background: #f0f4fb; }
+.file-box .file-icon { font-size: 28px; margin-bottom: 6px; }
+.file-box span { color: var(--navy-mid); font-weight: 600; }
+.file-box input[type="file"] { display: none; }
+
+/* ─── SPINNER ─── */
+.spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2.5px solid rgba(255,255,255,0.35); border-top-color: white;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+  margin-right: 7px; vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── FOOTER ─── */
+.footer-text {
+  margin-top: 24px; font-size: 11px; color: var(--gray-text);
+  text-align: center; line-height: 1.7;
+}
+.footer-text a { color: var(--navy-mid); text-decoration: none; }
+.footer-text a:hover { text-decoration: underline; }
+
+/* ─── NAVBAR (portal) ─── */
+.portal-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--navy); color: white;
+  padding: 10px 24px; display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 2px 12px rgba(15,37,71,0.4);
+}
+.portal-nav .nav-logo { display: flex; align-items: center; gap: 10px; }
+.portal-nav .nav-logo-shield {
+  width: 34px; height: 38px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px 3px 17px 17px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 900; color: white;
+}
+.portal-nav .nav-title { font-size: 14px; font-weight: 700; }
+.portal-nav .nav-sub   { font-size: 11px; opacity: 0.75; }
+.portal-nav-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.nav-user-badge {
+  background: rgba(255,255,255,0.15); border-radius: 20px;
+  padding: 5px 12px; font-size: 12px; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-logout {
+  background: rgba(220,38,38,0.2); border: 1px solid rgba(220,38,38,0.4);
+  color: #fca5a5; border-radius: 6px; padding: 6px 12px;
+  font-size: 11.5px; font-weight: 600; cursor: pointer;
+  font-family: 'Inter', sans-serif; transition: all 0.18s;
+}
+.btn-logout:hover { background: rgba(220,38,38,0.4); color: white; }
+
+/* ─── PORTAL SCREEN ─── */
+#screen-portal {
+  flex-direction: column;
+  background: var(--bg-left);
+  padding-top: 60px;
+}
+.portal-body {
+  display: flex; flex: 1; min-height: calc(100vh - 60px);
+}
+.portal-left {
+  width: 52%; background: var(--bg-left);
+  padding: 36px 52px;
+  overflow-y: auto;
+  position: relative;
+}
+.portal-left::after {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gray-border) 20%, var(--gray-border) 80%, transparent);
+}
+.portal-right { width: 48%; position: relative; overflow: hidden; min-height: calc(100vh - 60px); }
+.portal-right img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.portal-right-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(15,37,71,0.55) 0%, rgba(15,37,71,0.1) 60%);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 40px 36px;
+}
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--navy-dark); color: white;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  z-index: 9999; opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; }
+.toast.success { background: #15803d; }
+.toast.error   { background: #991b1b; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 850px) {
+  .split { flex-direction: column; }
+  .left-panel { width: 100%; padding: 32px 20px; }
+  .left-panel::after { display: none; }
+  .right-panel { width: 100%; height: 220px; }
+  .two-col { grid-template-columns: 1fr; }
+  .campus-caption { display: none; }
+  .portal-body { flex-direction: column; }
+  .portal-left { width: 100%; padding: 24px 20px; }
+  .portal-left::after { display: none; }
+  .portal-right { width: 100%; min-height: 220px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 1 — SIGN IN
+══════════════════════════════════════════ -->
+<div id="screen-signin" class="screen active">
+  <div class="split">
+    <div class="left-panel">
+      <div class="form-wrap">
+
+        <div class="logo-area" style="flex-direction: column; text-align: center;">
+          <img src="https://raw.githubusercontent.com/spuniversity477-code/VerifySystem/main/vikrant-university/assets/logo.png" alt="Vikrant University Logo" style="height: 80px; max-width: 100%; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'" />
+        </div>
+
+        <div class="page-heading">Sign in</div>
+        <div class="page-sub">Access your Student ERP Portal</div>
+
+        <div class="field-wrap">
+          <label class="field-label">Select Role</label>
+          <div class="select-wrap">
+            <select class="field-input" id="si-role">
+              <option value="student">Student</option>
+              <option value="faculty">Faculty</option>
+              <option value="admin">Admin</option>
+              <option value="registrar">Registrar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-wrap">
+          <label class="field-label">Username / Email</label>
+          <input class="field-input" type="text" id="si-username" placeholder="Enter your username or email" />
+          <div class="field-error" id="si-username-err">Please enter your username or email.</div>
+        </div>
+
+        <div class="field-wrap">
+          <label class="field-label">Password</label>
+          <input class="field-input" type="password" id="si-password" placeholder="Password" />
+          <div class="field-error" id="si-pass-err">Please enter your password.</div>
+        </div>
+
+        <div style="text-align:right; margin-bottom:14px;">
+          <button class="link-btn">Forget Password?</button>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-primary" onclick="doSignIn()">Sign in</button>
+          <button class="btn-secondary" onclick="showScreen('screen-signup')">Sign Up</button>
+        </div>
+
+        <div class="footer-text">
+          © 2025 <strong>Vikrant University, Gwalior</strong> &nbsp;|&nbsp; ERP v3.2<br/>
+          <a href="#">Admission Help</a> &nbsp;·&nbsp;
+          <a href="#">Contact Registrar</a> &nbsp;·&nbsp;
+          <a href="#">Privacy Policy</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <!-- [MANUAL IMAGE ADDITION] Replace src below with your own "Welcome to Vikrant University" background image path -->
+      <img id="signin-campus-img"
+        src="https://raw.githubusercontent.com/spuniversity477-code/VerifySystem/main/vikrant-university/assets/bg.jpg"
+        alt="Vikrant University Campus"
+        onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(160deg,#0f2547 0%,#1e4d8c 60%,#1a3a6b 100%)';" />
+      <div class="right-overlay">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SCREEN 2 — SIGN UP (3 STEPS)
+══════════════════════════════════════════ -->
+<div id="screen-signup" class="screen">
+  <div class="split">
+    <div class="left-panel">
+      <div class="form-wrap">
+
+        <div class="logo-area" style="flex-direction: column; text-align: center;">
+          <img src="https://raw.githubusercontent.com/spuniversity477-code/VerifySystem/main/vikrant-university/assets/logo.png" alt="Vikrant University Logo" style="height: 80px; max-width: 100%; object-fit: contain; margin-bottom: 5px;" onerror="this.style.display='none'" />
+        </div>
+
+        <div class="page-heading">Create Account</div>
+        <div class="page-sub">Register as a new student on ERP Portal</div>
+
+        <!-- STEPS BAR -->
+        <div class="steps-bar" id="steps-bar">
+          <div class="step-item">
+            <div class="step-dot active" id="step-dot-1">1</div>
+            <div class="step-label active" id="step-label-1">Basic Info</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item">
+            <div class="step-dot" id="step-dot-2">2</div>
+            <div class="step-label" id="step-label-2">Verify Captcha</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item">
+            <div class="step-dot" id="step-dot-3">3</div>
+            <div class="step-label" id="step-label-3">Set Password</div>
+          </div>
+        </div>
+
+        <!-- ── STEP 1: BASIC INFO ── -->
+        <div id="su-step1">
+          <div class="two-col">
+            <div class="field-wrap">
+              <label class="field-label">First Name *</label>
+              <input class="field-input" type="text" id="su-fname" placeholder="First name" />
+              <div class="field-error" id="su-fname-err">Required</div>
+            </div>
+            <div class="field-wrap">
+              <label class="field-label">Last Name *</label>
+              <input class="field-input" type="text" id="su-lname" placeholder="Last name" />
+              <div class="field-error" id="su-lname-err">Required</div>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Enrollment No. / Roll Number. *</label>
+            <input class="field-input" type="text" id="su-appno" placeholder="e.g. VU2025CS1042" />
+            <div class="field-error" id="su-appno-err">Please enter your application or scholar number.</div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Mobile Number *</label>
+            <input class="field-input" type="tel" id="su-mobile" placeholder="+91 9XXXXXXXXX" maxlength="13" />
+            <div class="field-error" id="su-mobile-err">Enter a valid 10-digit mobile number.</div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Email Address *</label>
+            <input class="field-input" type="email" id="su-email" placeholder="your@email.com" />
+            <div class="field-error" id="su-email-err">Enter a valid email address.</div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Programme / Course *</label>
+            <div class="select-wrap">
+              <select class="field-input" id="su-programme">
+                <option value="">Select Programme</option>
+                <option>B.Tech</option>
+                <option>M.Tech</option>
+                <option>MBA</option>
+                <option>BBA</option>
+                <option>LLB</option>
+                <option>LLM</option>
+                <option>B.Pharm</option>
+                <option>M.Pharm</option>
+                <option>BCA</option>
+                <option>MCA</option>
+                <option>B.Sc</option>
+                <option>M.Sc</option>
+              </select>
+            </div>
+            <div class="field-error" id="su-prog-err">Please select your programme.</div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" onclick="step1Next()">Continue →</button>
+            <button class="btn-secondary" onclick="showScreen('screen-signin')">Back to Sign In</button>
+          </div>
+        </div>
+
+        <!-- ── STEP 2: VERIFY CAPTCHA ── -->
+        <div id="su-step2" style="display:none;">
+          <div class="info-note">
+            <span class="icon">🤖</span>
+            <span>To proceed, please solve the simple math captcha to verify you are human.</span>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label" id="captcha-question">What is 0 + 0? *</label>
+            <input class="field-input" type="text" id="su-captcha" placeholder="Enter your answer" oninput="this.value=this.value.replace(/\D/g,'')" />
+            <div class="field-error" id="su-captcha-err">Incorrect answer. Please try again.</div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" onclick="step2VerifyCaptcha()">Verify Captcha & Continue →</button>
+            <button class="btn-secondary" onclick="goStep(1)">← Back</button>
+          </div>
+        </div>
+
+        <!-- ── STEP 3: SET PASSWORD ── -->
+        <div id="su-step3" style="display:none;">
+          <div class="info-note">
+            <span class="icon">✅</span>
+            <span>Verified! Now create a secure password for your account. Your <strong>User ID</strong> will be your Email Address.</span>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Create Password *</label>
+            <input class="field-input" type="password" id="su-pass1" placeholder="Minimum 8 characters" oninput="checkPassStrength()" />
+            <div class="field-error" id="su-pass1-err">Password must be at least 8 characters.</div>
+            <div id="pass-strength-bar" style="height:4px; border-radius:4px; margin-top:6px; background:var(--gray-border); overflow:hidden;">
+              <div id="pass-strength-fill" style="height:100%; width:0%; border-radius:4px; transition:width 0.3s, background 0.3s;"></div>
+            </div>
+            <div id="pass-strength-label" style="font-size:11px; color:var(--gray-text); margin-top:3px;"></div>
+          </div>
+
+          <div class="field-wrap">
+            <label class="field-label">Confirm Password *</label>
+            <input class="field-input" type="password" id="su-pass2" placeholder="Re-enter password" />
+            <div class="field-error" id="su-pass2-err">Passwords do not match.</div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" onclick="step3CreateAccount()">Create Account</button>
+            <button class="btn-secondary" onclick="goStep(2)">← Back</button>
+          </div>
+        </div>
+
+        <!-- ── SUCCESS ── -->
+        <div id="su-success" style="display:none; text-align:center; padding:10px 0;">
+          <div style="font-size:52px; margin-bottom:12px;">🎉</div>
+          <div style="font-size:20px; font-weight:700; color:var(--navy); margin-bottom:6px;">Account Created!</div>
+          <div style="font-size:13px; color:var(--gray-text); margin-bottom:18px; line-height:1.6;">
+            Welcome to Vikrant University ERP.<br/>
+            Your User ID has been sent to your registered email.
+          </div>
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:14px 18px; margin-bottom:20px;">
+            <div style="font-size:11px; color:var(--gray-text); margin-bottom:4px;">YOUR USER ID (EMAIL)</div>
+            <div style="font-size:18px; font-weight:700; color:var(--navy); word-break:break-all;" id="created-user-id"></div>
+          </div>
+          <button class="btn-primary" style="max-width:240px; margin:0 auto; display:block;" onclick="showScreen('screen-signin')">
+            → Proceed to Sign In
+          </button>
+        </div>
+
+        <div class="footer-text" id="su-footer">
+          Already have an account?&nbsp;
+          <button class="link-btn" onclick="showScreen('screen-signin')">Sign In here</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <img
+        src="https://raw.githubusercontent.com/spuniversity477-code/VerifySystem/main/vikrant-university/assets/bg.jpg"
+        alt="Vikrant University Campus"
+        onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(160deg,#0f2547 0%,#1e4d8c 60%,#1a3a6b 100%)';" />
+      <div class="right-overlay">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SCREEN 3 — PORTAL (OFFER VERIFICATION)
+══════════════════════════════════════════ -->
+<div id="screen-portal" class="screen">
+
+  <!-- TOP NAV -->
+  <div class="portal-nav">
+    <div class="nav-logo">
+      <img src="https://raw.githubusercontent.com/spuniversity477-code/VerifySystem/main/vikrant-university/assets/logo.png" alt="Logo" style="height:45px; margin-right:10px; object-fit:contain;" onerror="this.style.display='none'" />
+      <div>
+        <div class="nav-title">Vikrant University ERP</div>
+        <div class="nav-sub">Student Portal</div>
+      </div>
+    </div>
+    <div class="portal-nav-right">
+      <div class="nav-user-badge">👤 <span id="nav-username">Student</span></div>
+      <button class="btn-logout" onclick="doLogout()">⏻ Logout</button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="portal-body">
+
+    <!-- LEFT: FORM -->
+    <div class="portal-left">
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:22px; font-weight:700; color:var(--dark-text);">Offer Letter Verification</div>
+        <div style="font-size:13px; color:var(--gray-text);">Verify your Admission / Scholarship / Hostel offer letter instantly</div>
+      </div>
+
+      <!-- UNIFIED VERIFICATION FORM -->
+      <div id="t-verify">
+        <div class="info-note">
+          <span class="icon">ℹ️</span>
+          <span>Enter your <strong>Name</strong>, <strong>Enrollment No.</strong>, and select your <strong>Programme</strong> to verify your document.</span>
+        </div>
+
+        <div class="field-wrap">
+          <label class="field-label">Candidate Name *</label>
+          <input class="field-input" type="text" id="verifyName" placeholder="Enter Full Name" />
+        </div>
+
+        <div class="field-wrap">
+          <label class="field-label">Enrollment No. / Scholar No. *</label>
+          <input class="field-input" type="text" id="verifyEnrollment" placeholder="e.g. VU22BPH084" />
+        </div>
+
+        <div class="field-wrap">
+          <label class="field-label">Programme / Course *</label>
+          <div class="select-wrap">
+            <select class="field-input" id="verifyProg">
+              <option value="">Select Programme</option>
+              <option>B.Tech</option>
+              <option>M.Tech</option>
+              <option>MBA</option>
+              <option>BBA</option>
+              <option>LLB</option>
+              <option>LLM</option>
+              <option>B.Pharm</option>
+              <option>M.Pharm</option>
+              <option>BCA</option>
+              <option>MCA</option>
+              <option>B.Sc</option>
+              <option>M.Sc</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-primary" onclick="verifyUnified(event)">🔍 Verify Letter</button>
+          <button class="btn-secondary" onclick="resetAll()">Reset</button>
+        </div>
+        <div class="result-card" id="r-unified"></div>
+      </div>
+      </div>
+
+      <div class="footer-text" style="margin-top:28px;">
+        © 2025 <strong>Vikrant University, Gwalior</strong> &nbsp;|&nbsp; ERP v3.2<br/>
+        <a href="#">Admission Help</a> &nbsp;·&nbsp;
+        <a href="#">Contact Registrar</a> &nbsp;·&nbsp;
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: CAMPUS IMAGE -->
+    <div class="portal-right">
+      <!-- [MANUAL IMAGE ADDITION] Replace src below with your own portal background image path -->
+      <img
+        src="https://raw.githubusercontent.com/spuniversity477-code/VerifySystem/main/vikrant-university/assets/bg.jpg"
+        alt="Vikrant University Campus"
+        onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(160deg,#0f2547 0%,#1e4d8c 60%,#1a3a6b 100%)';" />
+      <div class="portal-right-overlay">
+        <div class="campus-caption">
+          <h3>🎓 Vikrant University, Gwalior</h3>
+          <p>Official Offer Letter Verification System<br/>Powered by Vikrant ERP · Admissions Office</p>
+          <div class="campus-tags">
+            <span class="campus-tag">UGC Approved</span>
+            <span class="campus-tag">Est. 2009</span>
+            <span class="campus-tag">Gwalior, M.P.</span>
+            <span class="campus-tag">NAAC Accredited</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.portal-body -->
+</div><!-- /#screen-portal -->
+
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<script>
+/* ══════════════════════════════════════════
+   STUDENT DATA
+══════════════════════════════════════════ */
+let STUDENTS = {};
+let BY_OFFER = {};
+let BY_QR = {};
+
+// Dynamically fetch student data to match your existing GitHub structure
+fetch('data/vikrant_students.json')
+  .then(response => response.json())
+  .then(data => {
+    STUDENTS = data;
+    Object.values(STUDENTS).forEach(s => {
+      BY_OFFER[s.offerId] = s;
+      BY_QR[s.qr] = s;
+    });
+  })
+  .catch(error => {
+    console.error("Error loading student data:", error);
+    toast('Warning: Could not load data (Server required to fetch JSON)', 'error');
+  });
+
+/* ── REGISTERED USERS (demo) ── */
+const REGISTERED_USERS = {
+  'student': { pass: 'student123', name: 'Demo Student' },
+  'admin':   { pass: 'admin123',   name: 'Administrator'  }
+};
+
+/* ══════════════════════════════════════════
+   SCREEN NAVIGATION
+══════════════════════════════════════════ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ══════════════════════════════════════════
+   SIGN IN
+══════════════════════════════════════════ */
+function doSignIn() {
+  const u = document.getElementById('si-username').value.trim();
+  const p = document.getElementById('si-password').value.trim();
+  let ok = true;
+
+  if (!u) { showErr('si-username-err'); ok = false; } else hideErr('si-username-err');
+  if (!p) { showErr('si-pass-err');     ok = false; } else hideErr('si-pass-err');
+  if (!ok) return;
+
+  // Strict check: Only allow users that exist in REGISTERED_USERS
+  const user = REGISTERED_USERS[u] || REGISTERED_USERS[u.split('@')[0]];
+  if (user && user.pass === p) {
+    document.getElementById('nav-username').textContent = user.name;
+    showScreen('screen-portal');
+    toast('Welcome back, ' + user.name + '!', 'success');
+  } else {
+    // Demo fix: Reject any unauthorized login
+    toast('Invalid Username or Password.', 'error');
+  }
+}
+
+function doLogout() {
+  showScreen('screen-signin');
+  document.getElementById('si-username').value = '';
+  document.getElementById('si-password').value = '';
+  toast('You have been signed out.', '');
+}
+
+/* ══════════════════════════════════════════
+   SIGN UP – OTP FLOW
+══════════════════════════════════════════ */
+let captchaAnswer = 0;
+let currentStep = 1;
+let signupData = {};
+
+function step1Next() {
+  const fn   = document.getElementById('su-fname').value.trim();
+  const ln   = document.getElementById('su-lname').value.trim();
+  const an   = document.getElementById('su-appno').value.trim();
+  const mob  = document.getElementById('su-mobile').value.trim();
+  const em   = document.getElementById('su-email').value.trim();
+  const prog = document.getElementById('su-programme').value;
+  let ok = true;
+
+  if (!fn)  { showErr('su-fname-err');  ok = false; } else hideErr('su-fname-err');
+  if (!ln)  { showErr('su-lname-err');  ok = false; } else hideErr('su-lname-err');
+  if (!an)  { showErr('su-appno-err');  ok = false; } else hideErr('su-appno-err');
+  if (!mob || mob.replace(/\D/g,'').length < 10) { showErr('su-mobile-err'); ok = false; } else hideErr('su-mobile-err');
+  if (!em || !em.includes('@'))  { showErr('su-email-err');  ok = false; } else hideErr('su-email-err');
+  if (!prog) { showErr('su-prog-err'); ok = false; } else hideErr('su-prog-err');
+
+  if (!ok) return;
+
+  signupData = { fn, ln, an, mob, em, prog };
+
+  // Setup Captcha
+  const a = Math.floor(Math.random() * 10) + 1;
+  const b = Math.floor(Math.random() * 10) + 1;
+  captchaAnswer = a + b;
+  document.getElementById('captcha-question').textContent = `What is ${a} + ${b}? *`;
+  document.getElementById('su-captcha').value = '';
+
+  goStep(2);
+}
+
+function step2VerifyCaptcha() {
+  const entered = parseInt(document.getElementById('su-captcha').value.trim());
+  if (isNaN(entered) || entered !== captchaAnswer) {
+    showErr('su-captcha-err');
+    return;
+  }
+  hideErr('su-captcha-err');
+  toast('Human verification successful!', 'success');
+  goStep(3);
+}
+
+function step3CreateAccount() {
+  const p1 = document.getElementById('su-pass1').value;
+  const p2 = document.getElementById('su-pass2').value;
+  let ok = true;
+
+  if (p1.length < 8) { showErr('su-pass1-err'); ok = false; } else hideErr('su-pass1-err');
+  if (p1 !== p2)     { showErr('su-pass2-err'); document.getElementById('su-pass2-err').textContent = 'Passwords do not match.'; ok = false; } else hideErr('su-pass2-err');
+  if (!ok) return;
+
+  // Use Email as User ID
+  const uid = signupData.em;
+  document.getElementById('created-user-id').textContent = uid;
+
+  // Register user (demo)
+  REGISTERED_USERS[uid] = { pass: p1, name: signupData.fn + ' ' + signupData.ln };
+
+  // Pre-fill sign in
+  document.getElementById('si-username').value = uid;
+  document.getElementById('si-password').value = '';
+
+  goStep(4); // success
+}
+
+function goStep(n) {
+  ['su-step1','su-step2','su-step3','su-success'].forEach((id, i) => {
+    document.getElementById(id).style.display = (i + 1 === n) ? 'block' : 'none';
+  });
+  document.getElementById('su-footer').style.display = (n === 4) ? 'none' : 'block';
+  currentStep = n;
+  updateStepsBar(n);
+}
+
+function updateStepsBar(n) {
+  for (let i = 1; i <= 3; i++) {
+    const dot   = document.getElementById('step-dot-' + i);
+    const label = document.getElementById('step-label-' + i);
+    if (i < n) {
+      dot.classList.add('done');   dot.classList.remove('active');
+      dot.textContent = '✓';
+      label.classList.remove('active');
+    } else if (i === n) {
+      dot.classList.add('active'); dot.classList.remove('done');
+      dot.textContent = i;
+      label.classList.add('active');
+    } else {
+      dot.classList.remove('done','active');
+      dot.textContent = i;
+      label.classList.remove('active');
+    }
+  }
+}
+
+function checkPassStrength() {
+  const p = document.getElementById('su-pass1').value;
+  const fill  = document.getElementById('pass-strength-fill');
+  const label = document.getElementById('pass-strength-label');
+  let score = 0;
+  if (p.length >= 8)  score++;
+  if (/[A-Z]/.test(p)) score++;
+  if (/[0-9]/.test(p)) score++;
+  if (/[^A-Za-z0-9]/.test(p)) score++;
+  const map = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+  const col = ['', '#ef4444', '#f59e0b', '#3b82f6', '#22c55e'];
+  fill.style.width = (score * 25) + '%';
+  fill.style.background = col[score] || '#e5e7eb';
+  label.textContent = map[score] || '';
+  label.style.color = col[score] || '#6b7280';
+}
+
+/* ══════════════════════════════════════════
+   QUICK FILL
+══════════════════════════════════════════ */
+function fillUnified(id, prog) {
+  document.getElementById('unifiedId').value = id;
+  document.getElementById('unifiedProg').value = prog;
+}
+
+/* ══════════════════════════════════════════
+   BUILD RESULT CARD
+══════════════════════════════════════════ */
+function buildResult(s, rc) {
+  const sc = s.status === 'Accepted' ? 'green' : s.status.includes('Pending') ? 'warn' : 'red';
+  const badge = s.status === 'Accepted'
+    ? '<span class="badge-valid">VERIFIED ✔</span>'
+    : '<span class="badge-pending">PENDING</span>';
+  rc.innerHTML = `
+    <div class="result-head">
+      <h4>✅ Document Verified</h4>${badge}
+    </div>
+    <div class="result-body">
+      <div class="r-section">Student Information</div>
+      <div class="result-row"><span class="r-label">Scholar / Enrollment No.</span><span class="r-value">${s.scholarNo}</span></div>
+      <div class="result-row"><span class="r-label">Student Name</span><span class="r-value">${s.name}</span></div>
+      <div class="result-row"><span class="r-label">Programme</span><span class="r-value">${s.programme}</span></div>
+      <div class="result-row"><span class="r-label">Department / Branch</span><span class="r-value">${s.branch}</span></div>
+      <div class="result-row"><span class="r-label">Academic Year / Term</span><span class="r-value">${s.year}</span></div>
+      <div class="result-row"><span class="r-label">Status</span><span class="r-value ${sc}">${s.status}</span></div>
+    </div>
+    ${s.documentUrl ? `<div style="text-align:center; padding: 15px; border-top:1px solid #e5e7eb; background:#f8fafc; border-bottom-left-radius:8px; border-bottom-right-radius:8px;"><a href="${s.documentUrl}" target="_blank" class="btn-primary" style="display:inline-block; text-decoration:none; padding:10px 20px;">📄 View Verified Document</a></div>` : ''}
+    `;
+  rc.classList.add('show');
+}
+
+function buildInvalid(rc, msg) {
+  rc.innerHTML = `
+    <div class="result-head invalid">
+      <h4>❌ Not Verified</h4><span class="badge-invalid">INVALID</span>
+    </div>
+    <div class="result-body" style="text-align:center; padding:18px 16px;">
+      <div style="font-size:38px; margin-bottom:8px;">⚠️</div>
+      <div style="font-size:13.5px; font-weight:600; color:#dc2626;">${msg}</div>
+      <div style="font-size:12px; color:var(--gray-text); margin-top:8px; line-height:1.6;">
+        This letter may be <strong>fraudulent</strong> or contain errors.<br/>
+        Contact: <strong>admissions@vikrantuniversity.ac.in</strong><br/>
+        Helpline: <strong>0751-XXXXXXX</strong>
+      </div>
+    </div>`;
+  rc.classList.add('show');
+}
+
+function loadingBtn(btn, label) {
+  btn.innerHTML = `<span class="spinner"></span> Verifying...`;
+  btn.disabled = true;
+  setTimeout(() => { btn.innerHTML = label; btn.disabled = false; }, 1800);
+}
+
+/* ══════════════════════════════════════════
+   VERIFY FUNCTIONS
+══════════════════════════════════════════ */
+function verifyUnified(e) {
+  const name = document.getElementById('verifyName').value.trim().toLowerCase();
+  const enroll = document.getElementById('verifyEnrollment').value.trim().toUpperCase();
+  const prog = document.getElementById('verifyProg').value;
+  const rc  = document.getElementById('r-unified');
+  const btn = e.currentTarget;
+
+  if (!name) { alert('Please enter Candidate Name.'); return; }
+  if (!enroll) { alert('Please enter Enrollment No.'); return; }
+  if (!prog) { alert('Please select Programme / Course.'); return; }
+
+  rc.classList.remove('show'); rc.innerHTML = '';
+  loadingBtn(btn, '🔍 Verify Document');
+  
+  // Programme alias map: dropdown value → possible JSON programme keywords
+  const PROG_ALIAS = {
+    'B.Pharm': ['b.pharm','bpharm','bph','bachelor of pharmacy'],
+    'M.Pharm': ['m.pharm','mpharm','mph','master of pharmacy'],
+    'B.Tech':  ['b.tech','btech'],
+    'M.Tech':  ['m.tech','mtech'],
+    'MBA':     ['mba'],
+    'BBA':     ['bba'],
+    'BCA':     ['bca'],
+    'MCA':     ['mca'],
+    'LLB':     ['llb'],
+    'LLM':     ['llm'],
+    'B.Sc':    ['b.sc','bsc'],
+    'M.Sc':    ['m.sc','msc'],
+  };
+  function progMatch(jsonProg, dropdownProg) {
+    if (!dropdownProg || dropdownProg === 'Any Programme') return true;
+    const jp = jsonProg.toLowerCase();
+    const dp = dropdownProg.toLowerCase();
+    if (jp.includes(dp) || jp.startsWith(dp)) return true;
+    const aliases = PROG_ALIAS[dropdownProg] || [dp];
+    return aliases.some(function(a){ return jp.includes(a); });
+  }
+
+  setTimeout(() => {
+    let s = STUDENTS[enroll];
+    if (s) {
+       if(s.name.toLowerCase().includes(name) && progMatch(s.programme, prog)) {
+         buildResult(s, rc);
+       } else {
+         buildInvalid(rc, `Details mismatch for Enrollment No "${enroll}". Please check Name and Programme.`);
+       }
+    }
+    else {
+      buildInvalid(rc, `Enrollment No "${enroll}" not found in our system.`);
+    }
+  }, 1800);
+}
+
+function resetAll() {
+  document.querySelectorAll('#screen-portal .field-input').forEach(el => el.value = '');
+  document.querySelectorAll('.result-card').forEach(el => { el.classList.remove('show'); el.innerHTML = ''; });
+}
+
+/* ══════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════ */
+function showErr(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('show');
+}
+function hideErr(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('show');
+}
+
+function toast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => { t.classList.remove('show'); }, 3000);
+}
+
+// Sign in on Enter key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const active = document.querySelector('.screen.active');
+    if (active && active.id === 'screen-signin') doSignIn();
+  }
+});
+</script>
+</body>
+</html>
