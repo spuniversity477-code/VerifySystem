@@ -14,17 +14,17 @@
     },
     {
         "faculty": "Faculty of Commerce",
-        "enrollment": "SPU2026002",
-        "dob": "2002-06-20",
-        "studentName": "Priya Singh",
-        "fatherName": "Sanjay Singh",
-        "motherName": "Rekha Singh",
+        "enrollment": "SPU2021003",
+        "dob": "1990-07-05",
+        "studentName": "Bashu Dev Neupane",
+        "fatherName": "Chintamani Neupane",
+        "motherName": "Numa Kumari Neupane",
         "course": "B.Com",
-        "certificateNo": "CERT-2026-002",
-        "issueDate": "15 January 2026",
-        "division": "Second Division",
-        "photo": "../assets/placeholder_photo.jpg",
-        "signature": "../assets/placeholder_sign.png"
+        "certificateNo": "CERT-2021-003",
+        "issueDate": "18 July 2021",
+        "division": "First Division",
+        "photo": "../assets/Bashu.jpg",
+        "signature": "../assets/Bashu sign.png"
     },
     {
         "faculty": "Faculty of Engineering",
