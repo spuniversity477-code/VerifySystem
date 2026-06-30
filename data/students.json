@@ -14,17 +14,17 @@
     },
     {
         "faculty": "Faculty of Commerce",
-        "enrollment": "SPU2021003",
+        "enrollment": "SPU2018003",
         "dob": "1990-07-05",
         "studentName": "Bashu Dev Neupane",
         "fatherName": "Chintamani Neupane",
         "motherName": "Numa Kumari Neupane",
         "course": "B.Com",
-        "certificateNo": "CERT-2021-003",
+        "certificateNo": "CERT-2018-003",
         "issueDate": "18 July 2021",
         "division": "First Division",
         "photo": "../assets/Bashu.jpg",
-        "signature": "../assets/Bashu sign.png"
+        "signature": "../assets/Ba.png"
     },
     {
         "faculty": "Faculty of Engineering",
